@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class platform : MonoBehaviour
 {
-    public float jump = 15f ;
+    public float jump = 25f ;
     
     
     void Start()
@@ -18,14 +18,20 @@ public class platform : MonoBehaviour
          
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>() ;
-        if(rb != null)
-	{
-	    Vector2 vel = rb.velocity ;
-            vel.y = jump ;
-            rb.velocity = vel ;
-	}
+        if(collision.relativeVelocity.y <= 0f)
+        {
+            Rigidbody2D rb = collision.collider.GetComponent<Rigidbody2D>();
+            if(rb != null)
+            {
+                Vector2 vl = rb.velocity;
+                vl.y = jump;
+                rb.velocity = vl;
+            }
+            
+        }
+        
+
     }
 }
